@@ -121,10 +121,9 @@ class Riesgos(models.Model):
         ('5', 'Casi Cierto')
     )
     riesgo = models.CharField('Riesgo',max_length=200, blank = False)
-    codigo = models.CharField('Codigo',max_length=10,unique=True,blank = False)
     fecha_identificacion_riesgo = models.DateField('Fecha de Identificación del Riesgo',null = True, blank = False)
     escenario_riesgo = models.CharField('Escenario Riesgo',max_length=350, blank = False)
-    riesgos_servicios = models.ManyToManyField(Servicios,blank=True)
+    riesgos_servicios = models.ManyToManyField(Servicios,blank=True,null=True)
     activos_afectados = models.CharField('Activos Afectados',max_length=100, blank = True)
     propietario = models.ForeignKey(Propietario,on_delete=models.CASCADE, null=True)
     categorias = models.ForeignKey(Categorias,on_delete=models.CASCADE, null=True)
@@ -189,13 +188,13 @@ class Comentarios(models.Model):
     def __str__(self):
         return self.comentario
 
-class Incidentes(models.Model):
-    fecha_registro_incidente = models.DateField('Fecha de Registro del Incidente',null = True, blank = False)
-    riesgos = models.ForeignKey(Riesgos,on_delete=models.CASCADE,null=True)
+# class Incidentes(models.Model):
+#     fecha_registro_incidente = models.DateField('Fecha de Registro del Incidente',null = True, blank = False)
+#     riesgos = models.ForeignKey(Riesgos,on_delete=models.CASCADE,null=True)
 
-    class Meta:
-        verbose_name = 'Incidente'
-        verbose_name_plural = 'Incidentes'
+#     class Meta:
+#         verbose_name = 'Incidente'
+#         verbose_name_plural = 'Incidentes'
 
-    def __str__(self):
-        return self.fecha_registro_incidente
+#     def __str__(self):
+#         return self.fecha_registro_incidente
