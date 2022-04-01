@@ -196,7 +196,7 @@ class RiesgoSerializer(serializers.ModelSerializer):
         impacto = validated_data['impacto']
         probabilidad_ocurrencia = validated_data['probabilidad_ocurrencia']
         magnitud_impacto = MagnitudImpacto.objects.get(pk=validated_data['idmagnitud_impacto'])
-        estados_riesgos =EstadosRiesgos.objects.get(pk=validated_data['idestados_riesgos'])
+        estados_riesgos = EstadosRiesgos.objects.get(pk=validated_data['idestados_riesgos'])
         fecha_estado_riesgo = validated_data['fecha_estado_riesgo']
         control = validated_data['control']
         estrategia = Estrategia.objects.get(pk=validated_data['idestrategia'])
@@ -227,26 +227,36 @@ class RiesgoSerializer(serializers.ModelSerializer):
 
         
     def update(self, instance, validated_data):
-        instance.riesgo = validated_data.get('riesgo',instance.riesgo)
+        instance.riesgo = validated_data.get('riesgo',instance.riesgo)       
         instance.fecha_identificacion_riesgo = validated_data.get('fecha_identificacion_riesgo',instance.fecha_identificacion_riesgo)
         instance.escenario_riesgo = validated_data.get('escenario_riesgo',instance.escenario_riesgo)
-        instance.riesgos_servicios = validated_data.get('riesgos_servicios',instance.riesgos_servicios)
+
+        # instance.riesgos_servicios = validated_data.get('riesgos_servicios',instance.riesgos_servicios)
+
         instance.activos_afectados = validated_data.get('activos_afectados',instance.activos_afectados)
-        instance.propietario = validated_data.get('propietario',instance.propietario)
-        instance.categorias = validated_data.get('categorias',instance.categorias)
+        instance.propietario = Propietario.objects.get(pk=validated_data['idpropietario'])
+  
+        instance.categorias = Categorias.objects.get(pk=validated_data['idcategoria']) 
         instance.form_ident_riesgo = validated_data.get('form_ident_riesgo',instance.form_ident_riesgo)
-        instance.fuente_riesgo = validated_data.get('fuente_riesgo',instance.fuente_riesgo)
-        instance.impacto_display = validated_data.get('impacto_display',instance.impacto_display)
-        instance.probabilidad_display = validated_data.get('probabilidad_display',instance.probabilidad_display)
-        instance.nivel_riesgo = validated_data.get('nivel_riesgo',instance.nivel_riesgo)
-        instance.magnitud_impacto = validated_data.get('magnitud_impacto',instance.magnitud_impacto)
-        instance.estados_riesgos = validated_data.get('estados_riesgos',instance.estados_riesgos)
+
+        instance.fuente_riesgo = FuenteRiesgos.objects.get(pk=validated_data['idfuente_riesgo'])
+
+        instance.impacto = validated_data.get('impacto',instance.impacto)
+        instance.probabilidad_ocurrencia = validated_data.get('probabilidad_ocurrencia',instance.probabilidad_ocurrencia)
+
+        instance.magnitud_impacto = MagnitudImpacto.objects.get(pk=validated_data['idmagnitud_impacto'])
+        instance.estados_riesgos = EstadosRiesgos.objects.get(pk=validated_data['idestados_riesgos'])
+
         instance.fecha_estado_riesgo = validated_data.get('fecha_estado_riesgo',instance.fecha_estado_riesgo)
         instance.control = validated_data.get('control',instance.control)
-        instance.estrategia = validated_data.get('estrategia',instance.estrategia)
+
+        instance.estrategia = Estrategia.objects.get(pk=validated_data['idestrategia'])
+
         instance.comentario_local = validated_data.get('comentario_local',instance.comentario_local)
-        instance.kri = validated_data.get('kri',instance.kri)
+
+        instance.kri = KRI.objects.get(pk=validated_data['idkri'])
+        
         instance.importancia = validated_data.get('importancia',instance.importancia)
-        instance.comentario = validated_data.get('comentario',instance.comentario)
+        # instance.comentario = validated_data.get('comentario',instance.comentario)
         instance.save()
         return instance
