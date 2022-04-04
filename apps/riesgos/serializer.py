@@ -260,3 +260,4 @@ class RiesgoSerializer(serializers.ModelSerializer):
         # instance.comentario = validated_data.get('comentario',instance.comentario)
         instance.save()
         return instance
+        

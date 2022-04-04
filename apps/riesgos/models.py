@@ -106,6 +106,7 @@ class EstadosRiesgos(models.Model):
         return self.estado
 
 class Riesgos(models.Model):
+
     IMPACTOS = (
         ('1', 'Insignificante'),
         ('2', 'Menor'),
