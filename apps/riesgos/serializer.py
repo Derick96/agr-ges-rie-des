@@ -171,7 +171,7 @@ class RiesgoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Riesgos
-        fields = ('id','riesgo',
+        fields = ('codigo','riesgo',
         'fecha_identificacion_riesgo','escenario_riesgo',
         'riesgos_servicios','idriesgos_servicios','activos_afectados','propietario',
         'idpropietario','idcategoria',

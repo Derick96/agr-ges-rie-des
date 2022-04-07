@@ -5,6 +5,7 @@ from datetime import datetime
 # Create your models here.
 class Propietario(models.Model):
     nombre = models.CharField('Propietario',max_length=200)
+    codigo = models.CharField('Codigo de la Vertical', max_length=10)
 
     class Meta:
         verbose_name = 'Propietario'
@@ -121,6 +122,7 @@ class Riesgos(models.Model):
         ('4', 'Probable'),
         ('5', 'Casi Cierto')
     )
+    auto_increment_id = models.AutoField(primary_key=True)
     riesgo = models.CharField('Riesgo',max_length=200, blank = False)
     fecha_identificacion_riesgo = models.DateField('Fecha de Identificación del Riesgo',null = True, blank = False)
     escenario_riesgo = models.CharField('Escenario Riesgo',max_length=350, blank = False)
@@ -167,10 +169,15 @@ class Riesgos(models.Model):
                 return "Inaceptable (Acción inmediata)"
         else:
             return "Inaceptable"
+    
+    @property
+    def codigo(self):
+        return self.propietario.codigo + str(self.auto_increment_id)
 
     class Meta:
         verbose_name = 'Riesgo'
         verbose_name_plural = 'Riesgos'
+        unique_together = (('propietario', 'auto_increment_id'),)
 
     def __str__(self):
         return self.riesgo
